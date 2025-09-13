@@ -57,7 +57,7 @@ export const authAPI = {
 
     const statusCode = response.data?.result?.status;
     const res =
-      response.statusCode === 200 && statusCode !== 401 && statusCode !== 500;
+      response.status === 200 && statusCode !== 401 && statusCode !== 500;
 
     if (res) {
       return "Reset Password Email Sent Successfully.";
