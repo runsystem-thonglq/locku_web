@@ -132,10 +132,9 @@ export const usePosts = () => {
 
         // alert();
         setMessage({
-          message: JSON.stringify(error),
-          // message: `Error: ${
-          //   error?.response?.data?.error?.message || error.message
-          // }`,
+          message: `Error: ${
+            error?.response?.data?.error?.message || error.message
+          }`,
           type: "Error",
         });
         throw error;
