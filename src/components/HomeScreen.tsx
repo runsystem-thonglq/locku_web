@@ -107,6 +107,53 @@ const HomeScreen: React.FC = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+          {/* Profile Card */}
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <div className="flex items-center mb-4">
+              <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center mr-4">
+                {userInfo?.photoUrl ? (
+                  <img
+                    src={userInfo.photoUrl}
+                    alt="Profile"
+                    className="w-16 h-16 rounded-full object-cover"
+                  />
+                ) : (
+                  <span className="text-2xl">👤</span>
+                )}
+              </div>
+              <div>
+                <h3 className="text-white font-semibold text-lg">
+                  Your Profile
+                </h3>
+                <p className="text-white/70 text-sm">
+                  {userInfo?.displayName || user?.email || "User"}
+                </p>
+              </div>
+            </div>
+            <p className="text-white/60 text-sm">
+              Manage your account settings and preferences
+            </p>
+          </div>
+
+          {/* Friends Card */}
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <div className="flex items-center mb-4">
+              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mr-4">
+                <span className="text-2xl">👥</span>
+              </div>
+              <div>
+                <h3 className="text-white font-semibold text-lg">Friends</h3>
+                <p className="text-white/70 text-sm">
+                  {friends.length} connections
+                </p>
+              </div>
+            </div>
+            <p className="text-white/60 text-sm">
+              Connect with your closest friends
+            </p>
+          </div>
+        </div>
         {/* Message Display */}
         {message && (
           <div
@@ -251,90 +298,6 @@ const HomeScreen: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Profile Card */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-            <div className="flex items-center mb-4">
-              <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center mr-4">
-                {userInfo?.photoUrl ? (
-                  <img
-                    src={userInfo.photoUrl}
-                    alt="Profile"
-                    className="w-16 h-16 rounded-full object-cover"
-                  />
-                ) : (
-                  <span className="text-2xl">👤</span>
-                )}
-              </div>
-              <div>
-                <h3 className="text-white font-semibold text-lg">
-                  Your Profile
-                </h3>
-                <p className="text-white/70 text-sm">
-                  {userInfo?.displayName || user?.email || "User"}
-                </p>
-              </div>
-            </div>
-            <p className="text-white/60 text-sm">
-              Manage your account settings and preferences
-            </p>
-          </div>
-
-          {/* Friends Card */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-            <div className="flex items-center mb-4">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mr-4">
-                <span className="text-2xl">👥</span>
-              </div>
-              <div>
-                <h3 className="text-white font-semibold text-lg">Friends</h3>
-                <p className="text-white/70 text-sm">
-                  {friends.length} connections
-                </p>
-              </div>
-            </div>
-            <p className="text-white/60 text-sm">
-              Connect with your closest friends
-            </p>
-          </div>
-
-          {/* Firebase Demo Card */}
-          <div className="md:col-span-2 lg:col-span-3 bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-            <div className="flex items-center mb-4">
-              <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center mr-4">
-                <span className="text-2xl">🔥</span>
-              </div>
-              <div>
-                <h3 className="text-white font-semibold text-lg">
-                  Firebase Demo
-                </h3>
-                <p className="text-white/70 text-sm">
-                  Check console for Firebase logs
-                </p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <p className="text-white/60 text-sm">
-                This app uses Firebase Authentication with anonymous sign-in.
-                Check your browser's developer console to see the Firebase
-                request headers being logged.
-              </p>
-              <div className="bg-black/20 rounded-lg p-3 text-green-400 text-xs font-mono">
-                <div>
-                  🔥 Request URL: https://identitytoolkit.googleapis.com/...
-                </div>
-                <div>🔥 Headers: {"{"}</div>
-                <div>&nbsp;&nbsp;"Content-Type": "application/json",</div>
-                <div>&nbsp;&nbsp;"X-Client-Version": "Web/12.2.1",</div>
-                <div>
-                  &nbsp;&nbsp;"X-Firebase-GMPID":
-                  "1:940478761197:web:d58fbeb2eb2bf2cf7fe4e4",
-                </div>
-                <div>&nbsp;&nbsp;"X-Firebase-Client": "H4sIAAAAA...",</div>
-                <div>{"}"}</div>
-              </div>
-            </div>
-          </div>
-
           {/* Activity Feed */}
           <div className="md:col-span-2 lg:col-span-3 bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
             <h3 className="text-white font-semibold text-lg mb-4">
