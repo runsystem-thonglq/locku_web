@@ -11,8 +11,8 @@ const LOCKET_API_BASE_URL = "https://api.locketcamera.com";
 const loginHeader = {
   "Content-Type": "application/json",
   "Accept-Language": "en-US",
-  "User-Agent":
-    "FirebaseAuth.iOS/10.23.1 com.locket.Locket/1.82.0 iPhone/18.0 hw/iPhone12_1",
+  //"User-agent":
+  //   "FirebaseAuth.iOS/10.23.1 com.locket.Locket/1.82.0 iPhone/18.0 hw/iPhone12_1",
   "X-Ios-Bundle-Identifier": "com.locket.Locket",
   "X-Client-Version": "iOS/FirebaseSDK/10.23.1/FirebaseCore-iOS",
   "X-Firebase-GMPID": "1:641029076083:ios:cc8eb46290d69b234fa606",

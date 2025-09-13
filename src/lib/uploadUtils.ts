@@ -48,8 +48,8 @@ export const uploadImageUtils = {
       // "x-goog-upload-content-length": fileSize,
       "accept-language": "vi-VN,vi;q=0.9",
       "x-firebase-storage-version": "ios/10.13.0",
-      "user-agent":
-        "com.locket.Locket/1.43.1 iPhone/17.3 hw/iPhone15_3 (GTMSUF/1)",
+      // "User-agent":
+      //   "com.locket.Locket/1.43.1 iPhone/17.3 hw/iPhone15_3 (GTMSUF/1)",
       // "x-goog-upload-content-type": "image/webp",
       "x-firebase-gmpid": "1:641029076083:ios:cc8eb46290d69b234fa609",
     };
@@ -137,8 +137,8 @@ export const uploadVideoUtils = {
       // "x-goog-upload-content-length": fileSize,
       "accept-language": "vi-VN,vi;q=0.9",
       "x-firebase-storage-version": "ios/10.13.0",
-      "user-agent":
-        "com.locket.Locket/1.43.1 iPhone/17.3 hw/iPhone15_3 (GTMSUF/1)",
+      // "User-agent":
+      //   "com.locket.Locket/1.43.1 iPhone/17.3 hw/iPhone15_3 (GTMSUF/1)",
       // "x-goog-upload-content-type": "video/mp4",
       "x-firebase-gmpid": "1:641029076083:ios:cc8eb46290d69b234fa609",
     };
@@ -174,8 +174,8 @@ export const uploadVideoUtils = {
       "X-Goog-Upload-Offset": "0",
       "Upload-Incomplete": "?0",
       "Upload-Draft-Interop-Version": "3",
-      "User-Agent":
-        "com.locket.Locket/1.43.1 iPhone/18.1 hw/iPhone15_3 (GTMSUF/1)",
+      // "User-agent":
+      //   "com.locket.Locket/1.43.1 iPhone/18.1 hw/iPhone15_3 (GTMSUF/1)",
     };
 
     const response = await axios.put(uploadUrl, blobVideo, {
