@@ -131,6 +131,31 @@ export const authAPI = {
     return response.data;
   },
 
+  getMoment: async (idToken: string, exclude?: string[]) => {
+    const body = {
+      data: {
+        // last_fetch: 99,
+        // should_count_missed_moments: true,
+        exclude: exclude,
+      },
+    };
+    const response = await axios.post(
+      `${LOCKET_API_BASE_URL}/getLatestMomentV2`,
+      body,
+      {
+        headers: {
+          ...loginHeader,
+          Authorization: "Bearer " + idToken,
+        },
+      }
+    );
+
+    return {
+      userId: response.data?.result?.data?.[0]?.user || "",
+      token: response.data?.result?.sync_token,
+    };
+  },
+
   updateAvatar: async (profile_picture_url: string, idToken: string) => {
     const body = {
       data: { profile_picture_url },

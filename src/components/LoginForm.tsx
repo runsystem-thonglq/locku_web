@@ -24,6 +24,15 @@ const LoginForm: React.FC = () => {
     if (checkValue(false)) {
       try {
         await login(email.trim(), password.trim());
+        // Save credentials on successful login
+        try {
+          localStorage.setItem(
+            "locku_credentials",
+            JSON.stringify({ email: email.trim(), password: password.trim() })
+          );
+        } catch (err) {
+          // Ignore storage errors
+        }
       } catch (error) {
         console.error("Login error:", error);
       }
@@ -54,6 +63,22 @@ const LoginForm: React.FC = () => {
     clearStatus();
     return () => clearMessage();
   }, [clearStatus, clearMessage]);
+
+  // Autofill from localStorage if available
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("locku_credentials");
+      if (raw) {
+        const creds = JSON.parse(raw) as { email?: string; password?: string };
+        if (creds?.email) setEmail(creds.email);
+        if (creds?.password) setPassword(creds.password);
+      }
+    } catch (err) {
+      // Ignore parse/storage errors
+    }
+    // run once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">

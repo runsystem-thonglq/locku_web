@@ -7,6 +7,7 @@ import { usePosts } from "@/hooks/usePosts";
 import { useMessageStore } from "@/stores/messageStore";
 import axios from "axios";
 import { UPLOAD_PROGRESS_STAGE } from "@/lib/uploadUtils";
+import { authAPI } from "@/lib/api";
 
 const HomeScreen: React.FC = () => {
   const { user, userInfo, logout, isLoading } = useAuth();
@@ -23,7 +24,11 @@ const HomeScreen: React.FC = () => {
   const [selectedMedia, setSelectedMedia] = useState<File | null>(null);
   const [caption, setCaption] = useState("");
   const [isVideo, setIsVideo] = useState(false);
+  const [isPosting, setIsPosting] = useState(false);
   const [showFriendSelector, setShowFriendSelector] = useState(false);
+  const [serverStatus, setServerStatus] = useState<
+    "checking" | "online" | "offline"
+  >("checking");
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -32,6 +37,24 @@ const HomeScreen: React.FC = () => {
       getFriends(user.localId, user.idToken);
     }
   }, [user, getFriends]);
+
+  useEffect(() => {
+    const checkServerStatus = async () => {
+      try {
+        const res = await axios.get(
+          "https://locku-be-1.onrender.com/locket/health"
+        );
+        if (res.status === 200) {
+          setServerStatus("online");
+        } else {
+          setServerStatus("offline");
+        }
+      } catch (e) {
+        setServerStatus("offline");
+      }
+    };
+    checkServerStatus();
+  }, []);
 
   useEffect(() => {
     if (postMoment) {
@@ -104,6 +127,7 @@ const HomeScreen: React.FC = () => {
     if (!selectedMedia || !user) return;
 
     try {
+      setIsPosting(true);
       await uploadMedia(selectedMedia, caption, user);
       // if (isVideo) {
       //   // await postVideo(
@@ -128,11 +152,23 @@ const HomeScreen: React.FC = () => {
         type: "Error",
         hideButton: true,
       });
+    } finally {
+      setIsPosting(false);
     }
+  };
+
+  const getMMO = async () => {
+    try {
+      const { userId, token } = await authAPI.getMoment(user?.idToken || "");
+      console.log(userId, 22);
+      const userA = await authAPI.fetchUser(userId || "", user?.idToken || "");
+      const a = await authAPI.getMoment(user?.idToken || "", [userId]);
+    } catch (error) {}
   };
 
   return (
     <div className="min-h-screen bg-black text-white">
+      {/* <button onClick={getMMO}>dadad</button> */}
       {/* Header */}
       <header className="bg-neutral-900/90 backdrop-blur-lg border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -144,6 +180,22 @@ const HomeScreen: React.FC = () => {
               <h1 className="text-xl font-bold text-white">Locket</h1>
             </div>
             <div className="flex items-center space-x-4">
+              <div
+                className={`px-2 py-1 rounded-full text-xs border ${
+                  serverStatus === "online"
+                    ? "bg-green-500/20 border-green-500/50 text-green-200"
+                    : serverStatus === "offline"
+                    ? "bg-red-500/20 border-red-500/50 text-red-200"
+                    : "bg-white/10 border-white/20 text-white/70"
+                }`}
+                title="Server status"
+              >
+                {serverStatus === "checking"
+                  ? "Checking server..."
+                  : serverStatus === "online"
+                  ? "Server online"
+                  : "Server offline"}
+              </div>
               <div className="text-white/70 text-sm">
                 Welcome, {userInfo?.displayName || user?.email || "User"}
               </div>
@@ -340,10 +392,10 @@ const HomeScreen: React.FC = () => {
           {/* Post Button */}
           <button
             onClick={handlePost}
-            disabled={!selectedMedia || isLoading}
+            disabled={!selectedMedia || isPosting}
             className="w-full bg-yellow-500 text-black py-3 rounded-xl font-semibold hover:bg-yellow-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading
+            {isPosting
               ? "Posting..."
               : `Send to ${
                   selected.length > 0 ? selected.length : "all"
