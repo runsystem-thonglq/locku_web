@@ -13,9 +13,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Locket - Share Moments with Friends",
+  title: "locku",
   description:
     "A modern social app for sharing moments with your closest friends",
+  applicationName: "locku",
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  themeColor: "#000000",
+  appleWebApp: {
+    capable: true,
+    title: "locku",
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export default function RootLayout({

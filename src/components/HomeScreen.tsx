@@ -132,14 +132,14 @@ const HomeScreen: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-pink-900 to-red-900">
+    <div className="min-h-screen bg-black text-white">
       {/* Header */}
-      <header className="bg-white/10 backdrop-blur-lg border-b border-white/20">
+      <header className="bg-neutral-900/90 backdrop-blur-lg border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center mr-3">
-                <span className="text-white text-sm">🔒</span>
+              <div className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center mr-3">
+                <span className="text-black text-sm">🔒</span>
               </div>
               <h1 className="text-xl font-bold text-white">Locket</h1>
             </div>
@@ -150,7 +150,7 @@ const HomeScreen: React.FC = () => {
               <button
                 onClick={handleLogout}
                 disabled={isLoading}
-                className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors duration-200 disabled:opacity-50"
+                className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-lg transition-colors duration-200 disabled:opacity-50"
               >
                 {isLoading ? "Signing out..." : "Logout"}
               </button>
@@ -163,9 +163,9 @@ const HomeScreen: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
           {/* Profile Card */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+          <div className="bg-neutral-900 rounded-2xl p-6 border border-white/10">
             <div className="flex items-center mb-4">
-              <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center mr-4">
+              <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
                 {userInfo?.photoUrl ? (
                   <img
                     src={userInfo.photoUrl}
@@ -173,7 +173,7 @@ const HomeScreen: React.FC = () => {
                     className="w-16 h-16 rounded-full object-cover"
                   />
                 ) : (
-                  <span className="text-2xl">👤</span>
+                  <span className="text-2xl text-black">👤</span>
                 )}
               </div>
               <div>
@@ -191,10 +191,10 @@ const HomeScreen: React.FC = () => {
           </div>
 
           {/* Friends Card */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+          <div className="bg-neutral-900 rounded-2xl p-6 border border-white/10">
             <div className="flex items-center mb-4">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mr-4">
-                <span className="text-2xl">👥</span>
+              <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
+                <span className="text-2xl text-black">👥</span>
               </div>
               <div>
                 <h3 className="text-white font-semibold text-lg">Friends</h3>
@@ -216,7 +216,7 @@ const HomeScreen: React.FC = () => {
                 ? "bg-red-500/20 border-red-500/50 text-red-200"
                 : message.type === "Success"
                 ? "bg-green-500/20 border-green-500/50 text-green-200"
-                : "bg-blue-500/20 border-blue-500/50 text-blue-200"
+                : "bg-yellow-500/20 border-yellow-500/50 text-yellow-200"
             }`}
           >
             <div className="flex justify-between items-center">
@@ -225,7 +225,7 @@ const HomeScreen: React.FC = () => {
                 <div className="ml-4">
                   <div className="w-32 bg-white/20 rounded-full h-2">
                     <div
-                      className="bg-white h-2 rounded-full transition-all duration-300"
+                      className="bg-yellow-500 h-2 rounded-full transition-all duration-300"
                       style={{ width: `${message.progress}%` }}
                     />
                   </div>
@@ -242,7 +242,7 @@ const HomeScreen: React.FC = () => {
         )}
 
         {/* Post Creation Section */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 mb-8">
+        <div className="bg-neutral-900 rounded-2xl p-6 border border-white/10 mb-8">
           <h2 className="text-white font-semibold text-xl mb-6">
             Create a Post
           </h2>
@@ -274,7 +274,7 @@ const HomeScreen: React.FC = () => {
             ) : (
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-white/30 rounded-xl p-8 text-center cursor-pointer hover:border-white/50 transition-colors"
+                className="border-2 border-dashed border-white/20 rounded-xl p-8 text-center cursor-pointer hover:border-white/40 transition-colors"
               >
                 <div className="text-4xl mb-2">📷</div>
                 <p className="text-white/70">Click to select image or video</p>
@@ -296,7 +296,7 @@ const HomeScreen: React.FC = () => {
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
               placeholder="Write a caption..."
-              className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent resize-none"
+              className="w-full px-4 py-3 bg-neutral-800 border border-white/10 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent resize-none"
               rows={3}
             />
           </div>
@@ -305,7 +305,7 @@ const HomeScreen: React.FC = () => {
           <div className="mb-6">
             <button
               onClick={() => setShowFriendSelector(!showFriendSelector)}
-              className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors duration-200"
+              className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-lg transition-colors duration-200"
             >
               Select Friends ({selected.length} selected)
             </button>
@@ -319,8 +319,8 @@ const HomeScreen: React.FC = () => {
                       onClick={() => toggleFriendSelection(friend.uid)}
                       className={`p-2 rounded-lg text-sm transition-colors ${
                         selected.includes(friend.uid)
-                          ? "bg-pink-500 text-white"
-                          : "bg-white/10 text-white/70 hover:bg-white/20"
+                          ? "bg-yellow-500 text-black"
+                          : "bg-neutral-800 text-white/80 hover:bg-neutral-700"
                       }`}
                     >
                       {friend.first_name} {friend.last_name}
@@ -341,7 +341,7 @@ const HomeScreen: React.FC = () => {
           <button
             onClick={handlePost}
             disabled={!selectedMedia || isLoading}
-            className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-xl font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-yellow-500 text-black py-3 rounded-xl font-semibold hover:bg-yellow-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading
               ? "Posting..."
@@ -353,14 +353,14 @@ const HomeScreen: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Activity Feed */}
-          <div className="md:col-span-2 lg:col-span-3 bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+          <div className="md:col-span-2 lg:col-span-3 bg-neutral-900 rounded-2xl p-6 border border-white/10">
             <h3 className="text-white font-semibold text-lg mb-4">
               Recent Activity
             </h3>
             <div className="space-y-4">
-              <div className="flex items-center p-4 bg-white/5 rounded-xl">
-                <div className="w-10 h-10 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center mr-3">
-                  <span className="text-white">🎉</span>
+              <div className="flex items-center p-4 bg-neutral-800 rounded-xl">
+                <div className="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center mr-3">
+                  <span className="text-black">🎉</span>
                 </div>
                 <div>
                   <p className="text-white font-medium">Welcome to Locket!</p>
@@ -369,9 +369,9 @@ const HomeScreen: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center p-4 bg-white/5 rounded-xl">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mr-3">
-                  <span className="text-white">📱</span>
+              <div className="flex items-center p-4 bg-neutral-800 rounded-xl">
+                <div className="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center mr-3">
+                  <span className="text-black">📱</span>
                 </div>
                 <div>
                   <p className="text-white font-medium">Get Started</p>
@@ -386,25 +386,25 @@ const HomeScreen: React.FC = () => {
 
         {/* Quick Actions */}
         <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-          <button className="bg-white/10 hover:bg-white/20 backdrop-blur-lg rounded-xl p-4 border border-white/20 transition-colors duration-200">
+          <button className="bg-neutral-900 hover:bg-neutral-800 rounded-xl p-4 border border-white/10 transition-colors duration-200">
             <div className="text-center">
               <div className="text-2xl mb-2">📷</div>
               <p className="text-white text-sm font-medium">Add Photo</p>
             </div>
           </button>
-          <button className="bg-white/10 hover:bg-white/20 backdrop-blur-lg rounded-xl p-4 border border-white/20 transition-colors duration-200">
+          <button className="bg-neutral-900 hover:bg-neutral-800 rounded-xl p-4 border border-white/10 transition-colors duration-200">
             <div className="text-center">
               <div className="text-2xl mb-2">👤</div>
               <p className="text-white text-sm font-medium">Add Friend</p>
             </div>
           </button>
-          <button className="bg-white/10 hover:bg-white/20 backdrop-blur-lg rounded-xl p-4 border border-white/20 transition-colors duration-200">
+          <button className="bg-neutral-900 hover:bg-neutral-800 rounded-xl p-4 border border-white/10 transition-colors duration-200">
             <div className="text-center">
               <div className="text-2xl mb-2">⚙️</div>
               <p className="text-white text-sm font-medium">Settings</p>
             </div>
           </button>
-          <button className="bg-white/10 hover:bg-white/20 backdrop-blur-lg rounded-xl p-4 border border-white/20 transition-colors duration-200">
+          <button className="bg-neutral-900 hover:bg-neutral-800 rounded-xl p-4 border border-white/10 transition-colors duration-200">
             <div className="text-center">
               <div className="text-2xl mb-2">💬</div>
               <p className="text-white text-sm font-medium">Messages</p>

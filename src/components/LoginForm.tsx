@@ -56,12 +56,12 @@ const LoginForm: React.FC = () => {
   }, [clearStatus, clearMessage]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-pink-900 to-red-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
       <div id="recaptcha-container"></div>
-      <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 w-full max-w-md border border-white/20 shadow-2xl">
+      <div className="bg-neutral-900 backdrop-blur-lg rounded-3xl p-8 w-full max-w-md border border-white/10 shadow-2xl">
         <div className="text-center mb-8">
-          <div className="w-20 h-20 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center">
-            <span className="text-3xl">🔒</span>
+          <div className="w-20 h-20 bg-yellow-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <span className="text-3xl text-black">🔒</span>
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">Locket</h1>
           <p className="text-white/70">
@@ -85,7 +85,7 @@ const LoginForm: React.FC = () => {
                     passwordRef.current.focus();
                   }
                 }}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-neutral-800 border border-white/10 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                 placeholder="Enter your email"
                 autoComplete="off"
               />
@@ -106,7 +106,7 @@ const LoginForm: React.FC = () => {
                   }
                 }}
                 autoComplete="off"
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-neutral-800 border border-white/10 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                 placeholder="Enter your password"
               />
             </div>
@@ -128,7 +128,7 @@ const LoginForm: React.FC = () => {
             <button
               onClick={handleLogin}
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-xl font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-yellow-500 text-black py-3 rounded-xl font-semibold hover:bg-yellow-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? "Signing in..." : "Login"}
             </button>
@@ -136,7 +136,7 @@ const LoginForm: React.FC = () => {
             <button
               onClick={handleResetPassword}
               disabled={resetPasswordLoading}
-              className="w-full bg-white/10 text-white py-3 rounded-xl font-semibold hover:bg-white/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-yellow-500 text-black py-3 rounded-xl font-semibold hover:bg-yellow-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {resetPasswordLoading ? "Sending..." : "Reset Password"}
             </button>
