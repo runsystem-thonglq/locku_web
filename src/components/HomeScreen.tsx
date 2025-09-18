@@ -5,6 +5,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { useFriends } from "@/hooks/useFriends";
 import { usePosts } from "@/hooks/usePosts";
 import { useMessageStore } from "@/stores/messageStore";
+import axios from "axios";
+import { UPLOAD_PROGRESS_STAGE } from "@/lib/uploadUtils";
 
 const HomeScreen: React.FC = () => {
   const { user, userInfo, logout, isLoading } = useAuth();
@@ -16,7 +18,7 @@ const HomeScreen: React.FC = () => {
     clearSelectedFriends,
   } = useFriends();
   const { uploadImage, uploadVideo, postMoment, clearPostMoment } = usePosts();
-  const { message, clearMessage } = useMessageStore();
+  const { message, clearMessage, setMessage } = useMessageStore();
 
   const [selectedMedia, setSelectedMedia] = useState<File | null>(null);
   const [caption, setCaption] = useState("");
@@ -56,6 +58,41 @@ const HomeScreen: React.FC = () => {
     }
   };
 
+  const uploadMedia = async (file: File, caption: string, user: any) => {
+    let timeOutId;
+    try {
+      // const user = JSON.parse(miscFuncs.getCookie("user"));
+      const formData = new FormData();
+
+      if (file.type.includes("image")) {
+        formData.append("images", file);
+      } else if (file.type.includes("video")) {
+        formData.append("videos", file);
+      }
+
+      formData.append("caption", caption);
+      formData.append("userId", user.localId);
+      formData.append("idToken", user.idToken);
+
+      const res = await axios.post(
+        // "http://localhost:5001/locket/upload-media",
+        "https://locku-be-1.onrender.com/locket/upload-media",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      clearTimeout(timeOutId);
+      return res.data;
+    } catch (error) {
+      clearTimeout(timeOutId);
+      throw error;
+    }
+  };
+
   const handleRemoveMedia = () => {
     setSelectedMedia(null);
     if (fileInputRef.current) {
@@ -67,13 +104,30 @@ const HomeScreen: React.FC = () => {
     if (!selectedMedia || !user) return;
 
     try {
-      if (isVideo) {
-        await uploadVideo(selectedMedia, caption, selected);
-      } else {
-        await uploadImage(selectedMedia, caption, selected);
-      }
-    } catch (error) {
+      await uploadMedia(selectedMedia, caption, user);
+      // if (isVideo) {
+      //   // await postVideo(
+      //   //   user.localId,
+      //   //   user.idToken,
+      //   //   selectedMedia as any,
+      //   //   caption
+      //   // );
+      //   // await uploadVideo(selectedMedia, caption, selected);
+      // } else {
+      //   await uploadImage(selectedMedia, caption, selected);
+      // }
+      setMessage({
+        message: UPLOAD_PROGRESS_STAGE.COMPLETED,
+        type: "info",
+        hideButton: true,
+      });
+    } catch (error: any) {
       console.error("Post error:", error);
+      setMessage({
+        message: UPLOAD_PROGRESS_STAGE.FAILED,
+        type: "Error",
+        hideButton: true,
+      });
     }
   };
 

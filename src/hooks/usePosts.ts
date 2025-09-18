@@ -2,7 +2,12 @@ import { useCallback } from "react";
 import { usePostsStore } from "../stores/postsStore";
 import { useMessageStore } from "../stores/messageStore";
 import { useAuthStore } from "../stores/authStore";
-import { postsAPI, authAPI } from "../lib/api";
+import {
+  postsAPI,
+  authAPI,
+  cretateBody,
+  LOCKET_API_BASE_URL,
+} from "../lib/api";
 import {
   uploadImageUtils,
   uploadVideoUtils,
@@ -14,6 +19,7 @@ import {
   UPLOAD_PROGRESS_STAGE,
   UPLOAD_VIDEO_PROGRESS_STAGE,
 } from "../lib/uploadUtils";
+import CryptoJS from "crypto";
 
 export const usePosts = () => {
   const {
@@ -28,7 +34,119 @@ export const usePosts = () => {
 
   const { setMessage } = useMessageStore();
   const { user } = useAuthStore();
+  const getMd5Hash = (str: string) => {
+    return CryptoJS.createHash("md5").update(str).digest("hex");
+  };
+  const postVideoToLocket = async (
+    idToken: string,
+    videoUrl: string,
+    thumbnailUrl: string,
+    caption: string
+  ) => {
+    try {
+      const postHeaders = {
+        "content-type": "application/json",
+        authorization: `Bearer ${idToken}`,
+      };
 
+      const data = {
+        data: {
+          thumbnail_url: thumbnailUrl,
+          video_url: videoUrl,
+          md5: getMd5Hash(videoUrl),
+          analytics: {
+            experiments: {
+              flag_4: {
+                "@type": "type.googleapis.com/google.protobuf.Int64Value",
+                value: "43",
+              },
+              flag_10: {
+                "@type": "type.googleapis.com/google.protobuf.Int64Value",
+                value: "505",
+              },
+              flag_23: {
+                "@type": "type.googleapis.com/google.protobuf.Int64Value",
+                value: "400",
+              },
+              flag_22: {
+                "@type": "type.googleapis.com/google.protobuf.Int64Value",
+                value: "1203",
+              },
+              flag_19: {
+                "@type": "type.googleapis.com/google.protobuf.Int64Value",
+                value: "52",
+              },
+              flag_18: {
+                "@type": "type.googleapis.com/google.protobuf.Int64Value",
+                value: "1203",
+              },
+              flag_16: {
+                "@type": "type.googleapis.com/google.protobuf.Int64Value",
+                value: "303",
+              },
+              flag_15: {
+                "@type": "type.googleapis.com/google.protobuf.Int64Value",
+                value: "501",
+              },
+              flag_14: {
+                "@type": "type.googleapis.com/google.protobuf.Int64Value",
+                value: "500",
+              },
+              flag_25: {
+                "@type": "type.googleapis.com/google.protobuf.Int64Value",
+                value: "23",
+              },
+            },
+            amplitude: {
+              device_id: "BF5D1FD7-9E4D-4F8B-AB68-B89ED20398A6",
+              session_id: {
+                value: "1722437166613",
+                "@type": "type.googleapis.com/google.protobuf.Int64Value",
+              },
+            },
+            google_analytics: {
+              app_instance_id: "5BDC04DA16FF4B0C9CA14FFB9C502900",
+            },
+            platform: "ios",
+          },
+          sent_to_all: true,
+          caption: caption,
+          overlays: [
+            {
+              data: {
+                text: caption,
+                text_color: "#FFFFFFE6",
+                type: "standard",
+                max_lines: {
+                  "@type": "type.googleapis.com/google.protobuf.Int64Value",
+                  value: "4",
+                },
+                background: {
+                  material_blur: "ultra_thin",
+                  colors: [],
+                },
+              },
+              alt_text: caption,
+              overlay_id: "caption:standard",
+              overlay_type: "caption",
+            },
+          ],
+        },
+      };
+
+      const response = await fetch(`${LOCKET_API_BASE_URL}/postMomentV2`, {
+        method: "POST",
+        headers: postHeaders,
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to create post: ${response.statusText}`);
+      }
+    } catch (error: any) {
+      throw error;
+    }
+  };
   const uploadImage = useCallback(
     async (file: File, caption: string, recipients: string[] = []) => {
       if (!user) {
@@ -252,15 +370,24 @@ export const usePosts = () => {
           progress: 88,
         });
 
-        const response = await postsAPI.postMoment(
-          {
-            caption,
-            thumbnail_url: thumbnailUrl,
-            video_url: downloadVideoUrl,
-            recipients,
-          },
-          user.idToken
+        const bodyPostMoment = cretateBody(
+          caption,
+          thumbnailUrl,
+          downloadVideoUrl,
+          recipients || []
         );
+        console.log(bodyPostMoment);
+        // const response = await postsAPI.postMoment(
+
+        const response = await postVideoToLocket(
+          user.idToken,
+          downloadVideoUrl,
+          thumbnailUrl,
+          caption
+        );
+        //   JSON.stringify(bodyPostMoment.data),
+        //   user.idToken
+        // );
 
         setMessage({
           message: UPLOAD_PROGRESS_STAGE.COMPLETED,

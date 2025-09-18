@@ -5,7 +5,7 @@ const GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
 // Firebase API endpoints
 const FIREBASE_BASE_URL =
   "https://www.googleapis.com/identitytoolkit/v3/relyingparty";
-const LOCKET_API_BASE_URL = "https://api.locketcamera.com";
+export const LOCKET_API_BASE_URL = "https://api.locketcamera.com";
 
 // Headers
 const loginHeader = {
@@ -185,24 +185,30 @@ export const friendsAPI = {
 // Posts API functions
 export const postsAPI = {
   postMoment: async (
-    data: {
-      caption: string;
-      thumbnail_url: string;
-      video_url?: string;
-      recipients: string[];
-    },
+    data: any,
+    // data: {
+    //   caption: string;
+    //   thumbnail_url: string;
+    //   video_url?: string;
+    //   recipients: string[];
+    // },
     idToken: string
   ) => {
     const body = { data };
+    const postHeaders = {
+      "content-type": "application/json",
+      authorization: `Bearer ${idToken}`,
+    };
 
     const response = await axios.post(
       `${LOCKET_API_BASE_URL}/postMomentV2`,
       body,
       {
-        headers: {
-          ...loginHeader,
-          Authorization: `Bearer ${idToken}`,
-        },
+        headers: postHeaders,
+        // headers: {
+        //   ...loginHeader,
+        //   Authorization: `Bearer ${idToken}`,
+        // },
       }
     );
 
@@ -212,4 +218,95 @@ export const postsAPI = {
       throw new Error(response.data?.error?.message || "Post failed");
     }
   },
+};
+
+export const cretateBody = (
+  caption: string,
+  thumbnailUrl: string,
+  downloadVideoUrl: string,
+  friends?: string[]
+) => {
+  const bodyPostMoment = {
+    data: {
+      thumbnail_url: thumbnailUrl,
+      video_url: downloadVideoUrl,
+      recipients: friends || [],
+      analytics: {
+        experiments: {
+          flag_4: {
+            "@type": "type.googleapis.com/google.protobuf.Int64Value",
+            value: "43",
+          },
+          flag_10: {
+            "@type": "type.googleapis.com/google.protobuf.Int64Value",
+            value: "505",
+          },
+          flag_23: {
+            "@type": "type.googleapis.com/google.protobuf.Int64Value",
+            value: "400",
+          },
+          flag_22: {
+            value: "1203",
+            "@type": "type.googleapis.com/google.protobuf.Int64Value",
+          },
+          flag_19: {
+            value: "52",
+            "@type": "type.googleapis.com/google.protobuf.Int64Value",
+          },
+          flag_18: {
+            "@type": "type.googleapis.com/google.protobuf.Int64Value",
+            value: "1203",
+          },
+          flag_16: {
+            value: "303",
+            "@type": "type.googleapis.com/google.protobuf.Int64Value",
+          },
+          flag_15: {
+            "@type": "type.googleapis.com/google.protobuf.Int64Value",
+            value: "501",
+          },
+          flag_14: {
+            "@type": "type.googleapis.com/google.protobuf.Int64Value",
+            value: "500",
+          },
+          flag_25: {
+            "@type": "type.googleapis.com/google.protobuf.Int64Value",
+            value: "23",
+          },
+        },
+        amplitude: {
+          device_id: "BF5D1FD7-9E4D-4F8B-AB68-B89ED20398A6",
+          session_id: {
+            value: "1722437166613",
+            "@type": "type.googleapis.com/google.protobuf.Int64Value",
+          },
+        },
+        google_analytics: {
+          app_instance_id: "5BDC04DA16FF4B0C9CA14FFB9C502900",
+        },
+        platform: "ios",
+      },
+      sent_to_all: true,
+      caption: caption,
+      overlays: [
+        {
+          data: {
+            text: caption,
+            text_color: "#FFFFFFE6",
+            type: "standard",
+            max_lines: {
+              "@type": "type.googleapis.com/google.protobuf.Int64Value",
+              value: "4",
+            },
+            background: { material_blur: "ultra_thin", colors: [] },
+          },
+          alt_text: caption,
+          overlay_id: "caption:standard",
+          overlay_type: "caption",
+        },
+      ],
+    },
+  };
+
+  return bodyPostMoment;
 };

@@ -58,7 +58,7 @@ export const uploadImageUtils = {
       name: `users/${idUser}/moments/thumbnails/${nameImg}`,
       contentType: "image/*",
       bucket: "",
-      metadata: { creator: idUser, visibility: "private" },
+      metadata: { creator: idUser },
     });
 
     const response = await axios.post(startUrl, startData, {
@@ -147,7 +147,7 @@ export const uploadVideoUtils = {
       name: `users/${idUser}/moments/videos/${nameVideo}`,
       contentType: "video/mp4",
       bucket: "",
-      metadata: { creator: idUser, visibility: "private" },
+      metadata: { creator: idUser },
     };
 
     const response = await axios.post(url, body, {
