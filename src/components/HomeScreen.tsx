@@ -42,7 +42,7 @@ const HomeScreen: React.FC = () => {
     const checkServerStatus = async () => {
       try {
         const res = await axios.get(
-          "https://locku-be-1.onrender.com/locket/health"
+          `${[process.env.NEXT_PULIC_API}/health`
         );
         if (res.status === 200) {
           setServerStatus("online");
@@ -99,7 +99,7 @@ const HomeScreen: React.FC = () => {
 
       const res = await axios.post(
         // "http://localhost:5001/locket/upload-media",
-        "https://locku-be-1.onrender.com/locket/upload-media",
+        `${[process.env.NEXT_PULIC_API}/locket/upload-media`,
         formData,
         {
           headers: {
