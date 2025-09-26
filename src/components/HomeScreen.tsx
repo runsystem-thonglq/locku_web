@@ -38,19 +38,19 @@ const HomeScreen: React.FC = () => {
     }
   }, [user, getFriends]);
 
-  useEffect(() => {
-    const checkServerStatus = async () => {
-      try {
-        const res = await axios.get(`https://13.238.194.50/health`);
-        if (res.status === 200) {
-          setServerStatus("online");
-        } else {
-          setServerStatus("offline");
-        }
-      } catch (e) {
+  const checkServerStatus = async () => {
+    try {
+      const res = await axios.get(`https://13.238.194.50/health`);
+      if (res.status === 200) {
+        setServerStatus("online");
+      } else {
         setServerStatus("offline");
       }
-    };
+    } catch (e) {
+      setServerStatus("offline");
+    }
+  };
+  useEffect(() => {
     checkServerStatus();
   }, []);
 
@@ -165,7 +165,7 @@ const HomeScreen: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* <button onClick={getMMO}>dadad</button> */}
+      <button onClick={checkServerStatus}>dadad</button>
       {/* Header */}
       <header className="bg-neutral-900/90 backdrop-blur-lg border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
