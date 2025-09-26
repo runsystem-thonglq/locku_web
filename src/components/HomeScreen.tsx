@@ -41,7 +41,7 @@ const HomeScreen: React.FC = () => {
   useEffect(() => {
     const checkServerStatus = async () => {
       try {
-        const res = await axios.get(`${process.env.API_URL}/health`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/health`);
         if (res.status === 200) {
           setServerStatus("online");
         } else {
@@ -96,7 +96,7 @@ const HomeScreen: React.FC = () => {
       formData.append("idToken", user.idToken);
 
       const res = await axios.post(
-        `${process.env.API_URL}/locket/upload-media`,
+        `${process.env.NEXT_PUBLIC_API}/locket/upload-media`,
         formData,
         {
           headers: {
