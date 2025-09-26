@@ -41,9 +41,7 @@ const HomeScreen: React.FC = () => {
   useEffect(() => {
     const checkServerStatus = async () => {
       try {
-        const res = await axios.get(
-          "https://locku-be-1.onrender.com/locket/health"
-        );
+        const res = await axios.get(`${process.env.API_URL}/health`);
         if (res.status === 200) {
           setServerStatus("online");
         } else {
@@ -98,8 +96,7 @@ const HomeScreen: React.FC = () => {
       formData.append("idToken", user.idToken);
 
       const res = await axios.post(
-        // "http://localhost:5001/locket/upload-media",
-        "https://locku-be-1.onrender.com/locket/upload-media",
+        `${process.env.API_URL}/locket/upload-media`,
         formData,
         {
           headers: {
@@ -136,7 +133,7 @@ const HomeScreen: React.FC = () => {
       //   //   selectedMedia as any,
       //   //   caption
       //   // );
-      //   // await uploadVideo(selectedMedia, caption, selected);
+      //   await uploadVideo(selectedMedia, caption, selected);
       // } else {
       //   await uploadImage(selectedMedia, caption, selected);
       // }
