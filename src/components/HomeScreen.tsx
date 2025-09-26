@@ -47,6 +47,8 @@ const HomeScreen: React.FC = () => {
         setServerStatus("offline");
       }
     } catch (e) {
+      alert(e);
+      alert(JSON.stringify(e));
       setServerStatus("offline");
     }
   };
@@ -165,7 +167,7 @@ const HomeScreen: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <button onClick={checkServerStatus}>dadad</button>
+      <button onClick={checkServerStatus}>FETC</button>
       {/* Header */}
       <header className="bg-neutral-900/90 backdrop-blur-lg border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
