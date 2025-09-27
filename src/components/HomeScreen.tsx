@@ -371,18 +371,18 @@ const HomeScreen: React.FC = () => {
           </div> */}
 
           {/* Post Button */}
-          <div className="flex items-center justify-center  fixed bottom-0 left-0 bg-black w-full py-15">
+          <div className="flex items-center justify-center  fixed bottom-0 left-0 bg-black w-full py-20">
             <button
               onClick={handlePost}
               disabled={!selectedMedia || isPosting}
-              className="block flex items-center justify-center w-[65px] h-[65px] mx-auto bg-yellow-500 text-black py-3 rounded-full font-semibold hover:bg-yellow-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="block flex items-center justify-center w-[80px] h-[80px] mx-auto bg-yellow-500 text-black py-3 rounded-full font-semibold hover:bg-yellow-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {/* {isPosting
               ? "Posting..."
               : `Send to ${
                   selected.length > 0 ? selected.length : "all"
                 } friends`} */}
-              <span className="w-[55px] h-[55px] bg-white inline-block rounded-full "></span>
+              <span className="w-[65px] h-[65px] bg-white inline-block rounded-full "></span>
             </button>
           </div>
         </div>
