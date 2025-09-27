@@ -168,7 +168,7 @@ const HomeScreen: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white py-15">
+    <div className="min-h-screen bg-black text-white pb-15">
       {/* Header */}
       <header className="bg-neutral-900/90 backdrop-blur-lg border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
