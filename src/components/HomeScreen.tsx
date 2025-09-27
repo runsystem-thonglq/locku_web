@@ -168,7 +168,7 @@ const HomeScreen: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white py-15">
       {/* Header */}
       <header className="bg-neutral-900/90 backdrop-blur-lg border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -216,7 +216,7 @@ const HomeScreen: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
           {/* Profile Card */}
-          <div className="bg-neutral-900 rounded-2xl px-6 py-2 border border-white/10">
+          <div className="bg-neutral-900 rounded-2xl px-6 py-2 border border-white/10 mb-10">
             <div className="flex items-center w-full">
               <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
                 {userInfo?.photoUrl ? (
@@ -371,7 +371,7 @@ const HomeScreen: React.FC = () => {
           </div> */}
 
           {/* Post Button */}
-          <div className="flex items-center justify-center  fixed bottom-0 left-0 bg-black w-full py-20">
+          <div className="flex items-center justify-center  fixed bottom-0 left-0 bg-black w-full pb-15 pt-5">
             <button
               onClick={handlePost}
               disabled={!selectedMedia || isPosting}
