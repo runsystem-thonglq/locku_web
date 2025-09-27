@@ -377,7 +377,7 @@ const HomeScreen: React.FC = () => {
               disabled={!selectedMedia || isPosting}
               className="block flex items-center justify-center w-[80px] h-[80px] mx-auto bg-yellow-500 text-black py-3 rounded-full font-semibold hover:bg-yellow-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {!isPosting ? (
+              {isPosting ? (
                 <div className="w-[65px] h-[65px] border-4 border-white border-t-transparent rounded-full animate-spin"></div>
               ) : (
                 <span className="w-[65px] h-[65px] bg-white inline-block rounded-full"></span>
