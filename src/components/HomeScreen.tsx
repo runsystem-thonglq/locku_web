@@ -371,7 +371,7 @@ const HomeScreen: React.FC = () => {
           </div> */}
 
           {/* Post Button */}
-          <div className="flex items-center justify-center  fixed bottom-0 left-0 bg-black w-full py-5">
+          <div className="flex items-center justify-center  fixed bottom-0 left-0 bg-black w-full py-15">
             <button
               onClick={handlePost}
               disabled={!selectedMedia || isPosting}
