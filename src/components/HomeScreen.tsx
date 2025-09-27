@@ -40,15 +40,13 @@ const HomeScreen: React.FC = () => {
 
   const checkServerStatus = async () => {
     try {
-      const res = await axios.get(`https://13.238.194.50/health`);
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/health`);
       if (res.status === 200) {
         setServerStatus("online");
       } else {
         setServerStatus("offline");
       }
     } catch (e) {
-      alert(e);
-      alert(JSON.stringify(e));
       setServerStatus("offline");
     }
   };
@@ -98,7 +96,7 @@ const HomeScreen: React.FC = () => {
       formData.append("idToken", user.idToken);
 
       const res = await axios.post(
-        `https://13.238.194.50/locket/upload-media`,
+        `${process.env.NEXT_PUBLIC_API}/locket/upload-media`,
         formData,
         {
           headers: {
@@ -144,6 +142,10 @@ const HomeScreen: React.FC = () => {
         type: "info",
         hideButton: true,
       });
+      clearPostMoment();
+      setSelectedMedia(null);
+      setCaption("");
+      clearSelectedFriends();
     } catch (error: any) {
       console.error("Post error:", error);
       setMessage({
@@ -167,18 +169,18 @@ const HomeScreen: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <button onClick={checkServerStatus}>FETC</button>
       {/* Header */}
       <header className="bg-neutral-900/90 backdrop-blur-lg border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <div className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center mr-3">
-                <span className="text-black text-sm">🔒</span>
+              <div className="w-[50px] h-[50px] bg-yellow-500 rounded-full flex items-center justify-center mr-3">
+                <span className="text-black text-sm rounded-full">
+                  <img src="/dogdog.gif" alt="" />
+                </span>
               </div>
-              <h1 className="text-xl font-bold text-white">Locket</h1>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 ">
               <div
                 className={`px-2 py-1 rounded-full text-xs border ${
                   serverStatus === "online"
@@ -196,12 +198,12 @@ const HomeScreen: React.FC = () => {
                   : "Server offline"}
               </div>
               <div className="text-white/70 text-sm">
-                Welcome, {userInfo?.displayName || user?.email || "User"}
+                {userInfo?.displayName || user?.email || "User"}
               </div>
               <button
                 onClick={handleLogout}
                 disabled={isLoading}
-                className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-lg transition-colors duration-200 disabled:opacity-50"
+                className="bg-yellow-500 hover:bg-yellow-600 text-black px-2 py-1 rounded-lg transition-colors duration-200 disabled:opacity-50"
               >
                 {isLoading ? "Signing out..." : "Logout"}
               </button>
@@ -214,8 +216,8 @@ const HomeScreen: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
           {/* Profile Card */}
-          <div className="bg-neutral-900 rounded-2xl p-6 border border-white/10">
-            <div className="flex items-center mb-4">
+          <div className="bg-neutral-900 rounded-2xl px-6 py-2 border border-white/10">
+            <div className="flex items-center w-full">
               <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
                 {userInfo?.photoUrl ? (
                   <img
@@ -229,34 +231,14 @@ const HomeScreen: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-white font-semibold text-lg">
-                  Your Profile
-                </h3>
-                <p className="text-white/70 text-sm">
                   {userInfo?.displayName || user?.email || "User"}
-                </p>
+                </h3>
+                <p className="text-white/70 text-sm"></p>
               </div>
             </div>
-            <p className="text-white/60 text-sm">
+            {/* <p className="text-white/60 text-sm">
               Manage your account settings and preferences
-            </p>
-          </div>
-
-          {/* Friends Card */}
-          <div className="bg-neutral-900 rounded-2xl p-6 border border-white/10">
-            <div className="flex items-center mb-4">
-              <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
-                <span className="text-2xl text-black">👥</span>
-              </div>
-              <div>
-                <h3 className="text-white font-semibold text-lg">Friends</h3>
-                <p className="text-white/70 text-sm">
-                  {friends.length} connections
-                </p>
-              </div>
-            </div>
-            <p className="text-white/60 text-sm">
-              Connect with your closest friends
-            </p>
+            </p> */}
           </div>
         </div>
         {/* Message Display */}
@@ -293,9 +275,9 @@ const HomeScreen: React.FC = () => {
         )}
 
         {/* Post Creation Section */}
-        <div className="bg-neutral-900 rounded-2xl p-6 border border-white/10 mb-8">
+        <div className="bg-neutral-900 rounded-2xl p-6 border border-white/10 mb-20">
           <h2 className="text-white font-semibold text-xl mb-6">
-            Create a Post
+            {/* <img src="/dogdog.gif" alt="z" /> */}
           </h2>
 
           {/* Media Upload */}
@@ -353,7 +335,7 @@ const HomeScreen: React.FC = () => {
           </div>
 
           {/* Friend Selection */}
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <button
               onClick={() => setShowFriendSelector(!showFriendSelector)}
               className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-lg transition-colors duration-200"
@@ -386,24 +368,43 @@ const HomeScreen: React.FC = () => {
                 </button>
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* Post Button */}
-          <button
-            onClick={handlePost}
-            disabled={!selectedMedia || isPosting}
-            className="w-full bg-yellow-500 text-black py-3 rounded-xl font-semibold hover:bg-yellow-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isPosting
+          <div className="flex items-center justify-center  fixed bottom-0 left-0 bg-black w-full py-5">
+            <button
+              onClick={handlePost}
+              disabled={!selectedMedia || isPosting}
+              className="block flex items-center justify-center w-[65px] h-[65px] mx-auto bg-yellow-500 text-black py-3 rounded-full font-semibold hover:bg-yellow-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {/* {isPosting
               ? "Posting..."
               : `Send to ${
                   selected.length > 0 ? selected.length : "all"
-                } friends`}
-          </button>
+                } friends`} */}
+              <span className="w-[55px] h-[55px] bg-white inline-block rounded-full "></span>
+            </button>
+          </div>
         </div>
+        {/* Friends Card */}
+        {/* <div className="bg-neutral-900 rounded-2xl px-6 py-2 border border-white/10">
+          <div className="flex items-center">
+            <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
+              <span className="text-2xl text-black">👥</span>
+            </div>
+            <div>
+              <h3 className="text-white font-semibold text-lg">Friends</h3>
+              <p className="text-white/70 text-sm">
+                {friends.length} connections
+              </p>
+            </div>
+          </div>
+          <p className="text-white/60 text-sm">
+            Connect with your closest friends
+          </p>
+        </div> */}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Activity Feed */}
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="md:col-span-2 lg:col-span-3 bg-neutral-900 rounded-2xl p-6 border border-white/10">
             <h3 className="text-white font-semibold text-lg mb-4">
               Recent Activity
@@ -435,7 +436,6 @@ const HomeScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* Quick Actions */}
         <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
           <button className="bg-neutral-900 hover:bg-neutral-800 rounded-xl p-4 border border-white/10 transition-colors duration-200">
             <div className="text-center">
@@ -461,7 +461,7 @@ const HomeScreen: React.FC = () => {
               <p className="text-white text-sm font-medium">Messages</p>
             </div>
           </button>
-        </div>
+        </div> */}
       </main>
     </div>
   );

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description:
     "A modern social app for sharing moments with your closest friends",
   applicationName: "locku",
-  manifest: "/manifest.webmanifest",
+  manifest: "/site.webmanifest",
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",

@@ -34,9 +34,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-yellow-500 via-black-100 to-red-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+          <div className="w-[100px] h-[100px] bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
             <span className="text-white text-2xl">
-              <img src="/favicon.ico" className="rounded-full" />
+              <img src="/dogdog.gif" alt="z" />
             </span>
           </div>
           <p className="text-white text-lg">Loading...</p>

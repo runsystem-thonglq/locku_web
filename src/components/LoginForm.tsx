@@ -85,10 +85,10 @@ const LoginForm: React.FC = () => {
       <div id="recaptcha-container"></div>
       <div className="bg-neutral-900 backdrop-blur-lg rounded-3xl p-8 w-full max-w-md border border-white/10 shadow-2xl">
         <div className="text-center mb-8">
-          <div className="w-20 h-20 bg-yellow-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-            <span className="text-3xl text-black">🔒</span>
+          <div className="w-[100px] h-[100px] bg-yellow-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+            <img src="/dogdog.gif" alt="z" />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Locket</h1>
+          <h1 className="text-3xl font-bold text-white mb-2">Locku :))</h1>
           <p className="text-white/70">
             {isSignUp ? "Create your account" : "Welcome back"}
           </p>
@@ -158,13 +158,13 @@ const LoginForm: React.FC = () => {
               {isLoading ? "Signing in..." : "Login"}
             </button>
 
-            <button
+            {/* <button
               onClick={handleResetPassword}
               disabled={resetPasswordLoading}
               className="w-full bg-yellow-500 text-black py-3 rounded-xl font-semibold hover:bg-yellow-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {resetPasswordLoading ? "Sending..." : "Reset Password"}
-            </button>
+            </button> */}
           </div>
         </div>
 
