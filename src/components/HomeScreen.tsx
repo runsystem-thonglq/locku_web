@@ -94,6 +94,7 @@ const HomeScreen: React.FC = () => {
       formData.append("caption", caption);
       formData.append("userId", user.localId);
       formData.append("idToken", user.idToken);
+      formData.append("user", user.displayName);
 
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API}/locket/upload-media`,

